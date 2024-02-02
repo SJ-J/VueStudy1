@@ -1,19 +1,9 @@
 <template>
 
-<div class="modal">
-  <div v-for="(detail, i) in rooms" :key="i">
-    <div class="black-bg" v-if="modalOpen == true && roomId === detail.id">
-      <div class="white-bg">
-        <h4>{{ detail.title }}</h4>
-        <div>
-          {{ detail.content }}
-        </div>
-        <button @click="closePop">닫기</button>
-      </div>
-    </div>
-  </div>
-</div>
+  <!-- Modal Popup -->
+  <ModalPop :rooms = "rooms" :modalOpen="modalOpen" :roomId="roomId" :closePop="closePop" />
 
+  <!-- Menu Bar -->
   <div class="menu">
     <a v-for="(menu, i) in menuName" :key="i"> {{ menu }} </a> 
     <span id="userHi" v-if="1 == 2"> 박무현 님 안녕하세요! </span>
@@ -21,12 +11,15 @@
     <span id="userHi" v-else> 로그인 후 이용해주세요. </span>
   </div>
 
+  <!-- Banner -->
+  <DiscountBanner />
+
+  <!-- Products -->
   <div class="shop">
     <div v-for="(shop, i) in rooms" :key="i">
       <img :src="shop.image" class="roomImg">
       <h4 @click="openPop(i)"> {{ shop.title }} </h4>
       <p> {{ shop.price }} 원</p>
-      <!-- <button @click="increase(i)">허위매물신고</button> <span>신고 수 : {{ reportCnt[i] }} 건</span> -->
     </div>
   </div>
   
@@ -34,19 +27,23 @@
 
 <script>
 
+// components import
 import roomInfo from './assets/oneroom.js'
+import DiscountBanner from './Discount.vue';
+import ModalPop from './Modal.vue';
 
 export default {
   name: 'App',
+    components: {
+      DiscountBanner: DiscountBanner,
+      ModalPop: ModalPop,
+    },
   data() {
     return {  // object 형식{k:v}으로 저장
       index : 0,
       reportCnt : [0, 0, 0, 0, 0, 0],
       menuName : ['Home', 'Shop', 'About'],
-      // products : ['백호동 원룸', '현무동 원룸', '주작동 원룸', '청룡동 원룸'],
       rooms : roomInfo,
-      // 단순 String값으로 처리되기 때문에, require를 통해 import 해주면 엑박 없이 이미지 잘 뜸!!
-      // imageUrl : [require('./assets/room0.jpg'), require('./assets/room1.jpg'), require('./assets/room2.jpg'), require('./assets/room3.jpg')],
       modalOpen : false,
       roomId : null,
     }
@@ -67,10 +64,8 @@ export default {
     },
     closePop() {
       this.modalOpen = false;
-    }
+    },
   },
-  components: {
-  }
 }
 
 </script>
@@ -82,18 +77,6 @@ body {
 div {
   box-sizing: border-box;
 }
-.black-bg {
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed; padding: 20px;
-}
-.white-bg {
-  width: 100%; background: white;
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 40px;
-}
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -103,11 +86,12 @@ div {
 }
 
 .menu {
+  position: fixed;
+  top: 0;
   background: rgb(67, 92, 124);
   padding: 15px;
   border-radius: 5px;
   width: 100%;
-  position: fixed;
 }
 
 .menu a {
@@ -125,5 +109,6 @@ div {
   height: 250px;
   margin-top: 40px;
 }
+
 
 </style>
