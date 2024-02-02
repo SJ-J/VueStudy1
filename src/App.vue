@@ -1,7 +1,7 @@
 <template>
 
   <!-- Modal Popup -->
-  <ModalPop :rooms = "rooms" :modalOpen="modalOpen" :roomId="roomId" :closePop="closePop" />
+  <ModalPop :rooms="rooms" :modalOpen="modalOpen" :roomId="roomId" :closePop="closePop" />
 
   <!-- Menu Bar -->
   <div class="menu">
@@ -15,13 +15,14 @@
   <DiscountBanner />
 
   <!-- Products -->
-  <div class="shop">
+  <ProductList :rooms="rooms" :openPop="openPop" :roomId="roomId" />
+  <!-- <div class="shop">
     <div v-for="(shop, i) in rooms" :key="i">
       <img :src="shop.image" class="roomImg">
       <h4 @click="openPop(i)"> {{ shop.title }} </h4>
       <p> {{ shop.price }} 원</p>
     </div>
-  </div>
+  </div> -->
   
 </template>
 
@@ -31,12 +32,14 @@
 import roomInfo from './assets/oneroom.js'
 import DiscountBanner from './components/Discount.vue';
 import ModalPop from './components/Modal.vue';
+import ProductList from './components/Product.vue';
 
 export default {
   name: 'App',
     components: {
       DiscountBanner: DiscountBanner,
       ModalPop: ModalPop,
+      ProductList: ProductList,
     },
   data() {
     return {  // object 형식{k:v}으로 저장
@@ -104,11 +107,11 @@ div {
   padding: 10px;
 }
 
-.roomImg {
+/* .roomImg {
   width: 400px;
   height: 250px;
   margin-top: 40px;
-}
+} */
 
 
 </style>

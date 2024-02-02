@@ -18,8 +18,8 @@
 
 <script>
 export default {
-    name: 'ModalPop',
-    props: {
+  name: 'ModalPop',
+  props: {
     modalOpen: Boolean,
     roomId: Number,
     closePop: Function,
