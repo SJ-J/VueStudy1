@@ -29,8 +29,8 @@
 
 // components import
 import roomInfo from './assets/oneroom.js'
-import DiscountBanner from './Discount.vue';
-import ModalPop from './Modal.vue';
+import DiscountBanner from './components/Discount.vue';
+import ModalPop from './components/Modal.vue';
 
 export default {
   name: 'App',
