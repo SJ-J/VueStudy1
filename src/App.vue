@@ -16,6 +16,7 @@
 
   <!-- Products -->
   <ProductList :rooms="rooms" :openPop="openPop" :roomId="roomId" />
+  <!-- <ProductList @openModal="modalOpen = true; roomId = $event" :rooms="rooms" :openPop="openPop" /> -->
   <!-- <div class="shop">
     <div v-for="(shop, i) in rooms" :key="i">
       <img :src="shop.image" class="roomImg">
@@ -43,6 +44,7 @@ export default {
     },
   data() {
     return {  // object 형식{k:v}으로 저장
+      objectData : {name: 'shin', age: 29},
       index : 0,
       reportCnt : [0, 0, 0, 0, 0, 0],
       menuName : ['Home', 'Shop', 'About'],

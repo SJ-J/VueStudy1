@@ -3,6 +3,7 @@
     <div v-for="(shop, i) in rooms" :key="i">
       <img :src="shop.image" class="roomImg">
       <h4 @click="openPop(i)"> {{ shop.title }} </h4>
+      <!-- <h4 @click="$emit('openPop', shop.id)"> {{ shop.title }} </h4> -->
       <p> {{ shop.price }} 원</p>
     </div>
   </div>
