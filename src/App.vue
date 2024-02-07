@@ -1,7 +1,13 @@
 <template>
 
   <!-- Modal Popup -->
+  <div class="start" :class="{ end : modalOpen }">
+    <ModalPop :rooms="rooms" :modalOpen="modalOpen" :roomId="roomId" :closePop="closePop" />
+  </div>
+  
+<Transition name="fade">
   <ModalPop :rooms="rooms" :modalOpen="modalOpen" :roomId="roomId" :closePop="closePop" />
+</Transition>
 
   <!-- Menu Bar -->
   <div class="menu">
@@ -76,6 +82,7 @@ export default {
 </script>
 
 <style>
+
 body {
   margin: 0;
 }
@@ -89,6 +96,16 @@ div {
   text-align: center;
   color: #2c3e50;
 }
+
+.start {
+  opacity: 0;
+  transition: all 1s;
+}
+
+.end {
+  opacity: 1;
+}
+
 
 .menu {
   position: fixed;
@@ -108,12 +125,6 @@ div {
   color: aliceblue;
   padding: 10px;
 }
-
-/* .roomImg {
-  width: 400px;
-  height: 250px;
-  margin-top: 40px;
-} */
 
 
 </style>

@@ -1,20 +1,22 @@
 <template>
-    <div class="modal">
-        <div v-for="(detail, i) in rooms" :key="i">
-            <div class="black-bg" v-if="modalOpen == true && roomId === detail.id">
-            <div class="white-bg">
-                <h4>{{ detail.title }}</h4>
-                <div>
-                <img :src="detail.image" class="roomImg">
-                <p> {{ detail.content }} </p>
-                <!-- <p> <input @input="month = $event.target.value"> 개월 </p> -->
-                <!-- <p> <input type="range" min="1" max="12" > 개월 </p> -->
-                <p> <input v-model.number="month" autocomplete="false"> 개월 </p>
-                <p> {{ month }}개월 계약 시 금액: {{ detail.price * month }} 원 </p>
-                </div>
-                <button @click="closePop">닫기</button>
-            </div>
-            </div>
+  <div class="modal">
+    <div v-for="(detail, id) in rooms" :key="id">
+      <Transition name="fade">  <!-- Transition은 조건문 바로 위에 줘야 돌아감… -->
+      <div class="black-bg" v-if="modalOpen == true && roomId === detail.id">
+          <div class="white-bg">
+              <h4>{{ detail.title }}</h4>
+              <div>
+              <img :src="detail.image" class="roomImg">
+              <p> {{ detail.content }} </p>
+              <!-- <p> <input @input="month = $event.target.value"> 개월 </p> -->
+              <!-- <p> <input type="range" min="1" max="12" > 개월 </p> -->
+              <p> <input v-model="month" autocomplete="false"> 개월 </p>
+              <p> {{ month }}개월 계약 시 금액: {{ detail.price * month }} 원 </p>
+              </div>
+              <button @click="closePop">닫기</button>
+          </div>
+          </div>
+        </Transition>
         </div>
     </div>
 </template>
@@ -36,10 +38,10 @@ export default {
     month(val) {
       if( isNaN(val) ) {
         alert("숫자만 입력할 수 있습니다.");
-        // this.month = val.replace(/[^0-9]/g,'1')
-        // this.month = 1;
-        return;
       }
+      this.$nextTick(() => {
+        this.month = 1;
+      });
     }
   },
   props: {
@@ -68,5 +70,25 @@ export default {
   border-radius: 8px;
   padding: 20px;
   margin-top: 40px;
+}
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(-1000px);
+}
+.fade-enter-active, .fade-leave-active {
+  transition: all 0.5s;
+}
+.fade-enter-to {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.fade-leave-from {
+  opacity: 1;
+  /* transform: translateY(-1000px); */
+}
+.fade-leave-to {
+  opacity: 0;
+  /* transform: translateY(0px); */
 }
 </style>
