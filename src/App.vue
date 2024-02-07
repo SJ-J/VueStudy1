@@ -20,6 +20,14 @@
   <!-- Banner -->
   <DiscountBanner />
 
+
+  <button @click="sortPriceAsc"> 낮은 가격 순 </button>
+  <button @click="sortPriceDesc"> 높은 가격 순 </button>
+  <button @click="sortUnderFifty"> 50만 원 이하 </button>
+  <button @click="sortAbc"> 가나다 순 </button>
+  <button @click="sortReset"> 정렬해제 </button>
+
+
   <!-- Products -->
   <ProductList :rooms="rooms" :openPop="openPop" :roomId="roomId" />
   <!-- <ProductList @openModal="modalOpen = true; roomId = $event" :rooms="rooms" :openPop="openPop" /> -->
@@ -55,6 +63,7 @@ export default {
       reportCnt : [0, 0, 0, 0, 0, 0],
       menuName : ['Home', 'Shop', 'About'],
       rooms : roomInfo,
+      roomsOrigin : [...roomInfo],  // deap copy로 오리진 데이터 보존(array, object)
       modalOpen : false,
       roomId : null,
     }
@@ -75,6 +84,37 @@ export default {
     },
     closePop() {
       this.modalOpen = false;
+    },
+    sortPriceAsc() {
+      this.rooms = [...this.roomsOrigin]; // copy된 data 넣어줌
+      this.rooms.sort(function(a, b) {
+        return a.price - b.price;
+      })
+    },
+    sortPriceDesc() {
+      this.rooms = [...this.roomsOrigin]; // copy된 data 넣어줌
+      this.rooms.sort(function(a, b) {
+        return b.price - a.price;
+      })
+    },
+    sortUnderFifty() {
+      // price가 500,000 미만인 데이터만 필터링하여 rooms 배열에 재할당
+      this.rooms = this.rooms.filter(room => room.price < 500000);
+      this.rooms.sort(function(a, b) {
+          return a.price - b.price;
+        })
+    },
+    sortAbc() {
+      this.rooms = [...this.roomsOrigin]; // copy된 data 넣어줌
+      this.rooms.sort(function(a, b) {
+        return (a.title < b.title) ? -1 : (a.title == b.title) ? 0 : 1;
+      })
+    },
+    sortReset() {
+      this.rooms = [...this.roomsOrigin]; // copy된 data 넣어줌
+      this.rooms.sort(function(a, b) {
+        return a.id - b.id;
+      })
     },
   },
 }
