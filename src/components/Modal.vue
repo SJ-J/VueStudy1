@@ -26,22 +26,41 @@ export default {
   name: 'ModalPop',
   data() {
     return {
-      month : 1,
+      month : 3,
+      userInput : null,
+      initialInput : true,
     }
   },
   // input값에 대한 제한(month 데이터가 변할 때마다 실행되는 함수)
   /*
     과제 1) 숫자가 아닌 데이터 입력 시, alert
     과제 2) 숫자가 아닌 데이터 입력 시, month값 1로 초기화
+    ---
+    과제 3) month에 3 이하 입력 시, alert(hint: update)
   */
-  watch: {
-    month(val) {
-      if( isNaN(val) ) {
+  // watch: {
+  //   month(val) {
+  //     if( isNaN(val) ) {
+  //       alert("숫자만 입력할 수 있습니다.");
+  //       this.$nextTick(() => {
+  //         this.month = 3;
+  //       });
+  //     } else if( val < 3) {
+  //       alert("3개월부터 계약이 가능한 상품입니다.");
+  //     }
+  //   }
+  // },
+  updated() {
+    if (this.month !== null && this.month !== undefined) {
+      if ( isNaN(this.month) ) {
         alert("숫자만 입력할 수 있습니다.");
+        this.$nextTick(() => {
+          this.month = 3;
+        });
+      } else if( this.month < 3) {
+        alert("3개월부터 계약이 가능한 상품입니다.");
+        this.month = 3;
       }
-      this.$nextTick(() => {
-        this.month = 1;
-      });
     }
   },
   props: {
@@ -82,7 +101,6 @@ export default {
   opacity: 1;
   transform: translateY(0px);
 }
-
 .fade-leave-from {
   opacity: 1;
   /* transform: translateY(-1000px); */

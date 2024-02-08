@@ -18,14 +18,16 @@
   </div>
 
   <!-- Banner -->
-  <DiscountBanner />
+  <DiscountBanner v-if="showDiscount == true" />
 
 
-  <button @click="sortPriceAsc"> 낮은 가격 순 </button>
-  <button @click="sortPriceDesc"> 높은 가격 순 </button>
-  <button @click="sortUnderFifty"> 50만 원 이하 </button>
-  <button @click="sortAbc"> 가나다 순 </button>
-  <button @click="sortReset"> 정렬해제 </button>
+  <div :class="{ buttons : !showDiscount }">
+    <button @click="sortPriceAsc"> 낮은 가격 순 </button>
+    <button @click="sortPriceDesc"> 높은 가격 순 </button>
+    <button @click="sortUnderFifty"> 50만 원 이하 </button>
+    <button @click="sortAbc"> 가나다 순 </button>
+    <button @click="sortReset"> 정렬해제 </button>
+  </div>
 
 
   <!-- Products -->
@@ -66,8 +68,14 @@ export default {
       roomsOrigin : [...roomInfo],  // deap copy로 오리진 데이터 보존(array, object)
       modalOpen : false,
       roomId : null,
+      showDiscount : true,
     }
   },
+  // mounted() {
+  //   setTimeout(() => {   // 2000ms 후 실행
+  //     this.showDiscount = false;
+  //   }, 2000);
+  // },
   methods : { // 함수는 이 자리 고정!!
     increase(index) {
       for (let i = 0; i < 1; i++) {
@@ -136,17 +144,6 @@ div {
   text-align: center;
   color: #2c3e50;
 }
-
-.start {
-  opacity: 0;
-  transition: all 1s;
-}
-
-.end {
-  opacity: 1;
-}
-
-
 .menu {
   position: fixed;
   top: 0;
@@ -155,12 +152,16 @@ div {
   border-radius: 5px;
   width: 100%;
 }
-
+.buttons{
+  padding: 10px;
+  margin: 10px;
+  margin-top: 60px;
+  border-radius: 5px;
+} 
 .menu a {
   color: aliceblue;
   padding: 10px;
 }
-
 #userHi {
   color: aliceblue;
   padding: 10px;
